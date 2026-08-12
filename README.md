@@ -3,6 +3,8 @@
 ## Live Dashboard
 🔗 [View interactive dashboard on Tableau Public](https://public.tableau.com/app/profile/rahul.kulkarni6129/viz/dataanalystproject_17865305719790/OnlineRetailSalesPerformanceDashboard2009-2011)
 
+![Dashboard Preview](dashboard_screenshot.jpeg)
+
 ## Business Question
 How is revenue trending over time, which products and regions drive the most value, and where are the opportunities to grow average order value?
 
