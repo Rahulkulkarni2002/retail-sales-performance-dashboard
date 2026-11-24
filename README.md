@@ -5,7 +5,7 @@
 - **Question:** how is revenue trending, which products, countries and customers drive it, and where can it grow?
 - **Data:** 804,824 cleaned transactions from a UK online gift retailer, December 2009 to December 2011.
 - **Currency:** the data is in pounds (£). £1 was worth about $1.57 on average over this period, so total revenue of £17.6M is about $27.6M.
-- **How:** 15 SQL queries (joins, CTEs, window functions) in DuckDB, cross-checked in pandas, and a Tableau dashboard.
+- **How:** every result is calculated twice, in SQL (15 queries: joins, CTEs, window functions) and in pandas, and the two must match. A Tableau dashboard shows the results.
 - **Main findings:**
   - Sales jump every September (+36% and +48%) and drop every January (-21% and -36%).
   - Underneath the seasons, revenue is flat: January to November 2011 was 0.4% above 2010.
@@ -27,11 +27,11 @@ Two companion projects use the same data:
 - [customer-segmentation-retention-analysis](https://github.com/Rahulkulkarni2002/customer-segmentation-retention-analysis): customer segments built from this data.
 
 ## Method
-Most numbers were built in SQL against the cleaned data, and order values in pandas. Results were checked a second way where possible (for example, month-over-month growth is calculated in both SQL and pandas), and questioned before being trusted. Several first results led to more digging and a changed conclusion (see findings 4 and 5).
+Each result is calculated in both SQL and pandas, and the notebook prints whether the two match. A number is only used once both methods agree. Several first results led to more digging and a changed conclusion (see findings 4 and 5).
 
 ## Findings
 
-Most findings come from SQL. In Part 1, findings 1 to 3 use SQL totals and rankings, and findings 4 and 5 (order values) use pandas with one SQL check. Part 2 is all SQL: window functions, CTEs and joins.
+Findings 1 to 3 and 6 to 10 are calculated in both SQL and pandas, with a printed check that they match. Findings 4 and 5 (order values) are calculated in pandas, with one SQL check.
 
 ### Part 1: sales, products and countries
 
@@ -59,21 +59,21 @@ Most findings come from SQL. In Part 1, findings 1 to 3 use SQL totals and ranki
 
 **What this adds up to:** the business lives on repeat customers and is not growing. Existing customers keep coming back, but months apart, and fewer new ones are arriving. The clearest opportunities are bringing customers back sooner and winning more new ones.
 
-## The SQL
+## SQL and pandas, side by side
 
-All queries are in the notebook and collected in [`queries.sql`](queries.sql).
+Every SQL query is in the notebook and collected in [`queries.sql`](queries.sql). The pandas version follows each query in the notebook, with a line that prints whether the two results match. All 15 checks print `True`.
 
-| Question | SQL used |
-|---|---|
-| Revenue by month, with growth from the month before | CTE, `DATE_TRUNC`, `LAG` |
-| Top products by revenue and by quantity | `GROUP BY`, filtering out postage codes |
-| Revenue and share by country | `COUNT(DISTINCT ...)`, calculated share |
-| Average, median and largest order by month | CTE, `MEDIAN`, `MAX` |
-| Is the business growing year over year? | `SUM() OVER (PARTITION BY ...)` running total, `LAG(..., 12)` |
-| Top 3 products in each country | two CTEs, `RANK() OVER (PARTITION BY ...)` |
-| New and returning customers by month | two CTEs, `JOIN`, `CASE WHEN` |
-| Cohort retention | three CTEs, `JOIN`, `DATE_DIFF`, `CASE WHEN` pivot |
-| Revenue by customer spend group | CTE, `NTILE(10)`, `SUM() OVER ()` |
+| Question | In SQL | In pandas |
+|---|---|---|
+| Revenue by month, with growth from the month before | CTE, `DATE_TRUNC`, `LAG` | `pct_change` |
+| Top products by revenue and by quantity | `GROUP BY`, `ORDER BY`, `LIMIT` | `groupby`, `sort_values`, `head` |
+| Revenue and customers by country | `COUNT(DISTINCT ...)` | `groupby`, `nunique` |
+| Average, median and largest order by month | CTE, `MEDIAN`, `MAX` | `groupby`, `mean` |
+| Is the business growing year over year? | `SUM() OVER (PARTITION BY ...)`, `LAG(..., 12)` | `groupby().cumsum()`, `pct_change(12)` |
+| Top 3 products in each country | `RANK() OVER (PARTITION BY ...)` | `groupby().rank()` |
+| New and returning customers by month | two CTEs, `JOIN`, `CASE WHEN` | `drop_duplicates`, `merge` |
+| Cohort retention | three CTEs, `JOIN`, `DATE_DIFF` | `groupby`, `unstack`, `div` |
+| Revenue by customer spend group | `NTILE(10)`, `SUM() OVER ()` | sort, then `array_split` into 10 groups |
 
 ## Data quality notes
 
@@ -82,7 +82,7 @@ All queries are in the notebook and collected in [`queries.sql`](queries.sql).
 - **Revenue is gross.** Cancelled invoices are removed in cleaning, but an order that was later cancelled still counts at its original value.
 
 ## Files
-- `sales_kpi_analysis.ipynb`: the full analysis, with notes on every finding
+- `sales_kpi_analysis.ipynb`: the full analysis in SQL and pandas, with notes on every finding
 - `queries.sql`: the 15 SQL queries on their own
 - `cleaning_script.py`: the data cleaning logic
 - `monthly_revenue.csv`, `top_products_revenue.csv`, `top_products_quantity.csv`, `country_revenue.csv`, `aov_by_country.csv`: the tables behind the dashboard
@@ -96,4 +96,4 @@ All queries are in the notebook and collected in [`queries.sql`](queries.sql).
 5. Open the exported CSVs in Tableau Public to rebuild the dashboard.
 
 ## Tools
-SQL (DuckDB), Python (pandas), Tableau Public.
+SQL (DuckDB), Python (pandas, NumPy), Tableau Public.

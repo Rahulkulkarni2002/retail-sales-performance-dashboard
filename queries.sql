@@ -1,5 +1,6 @@
 -- Online Retail Sales Performance Analysis: the SQL queries from sales_kpi_analysis.ipynb
 -- Run in DuckDB with cleaned_retail.csv loaded as the table 'retail'.
+-- Each of these is also calculated in pandas in the notebook, and the results are compared.
 
 -- 1. Monthly Revenue Trend
 SELECT
