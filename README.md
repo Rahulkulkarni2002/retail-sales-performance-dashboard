@@ -51,13 +51,13 @@ Findings 1 to 3 and 6 to 10 are calculated in both SQL and pandas, with a printe
 
 **7. The best sellers differ by country.** The cakestand leads in the UK, Ireland and Germany. In France and the Netherlands the leaders are children's items: night lights, snack boxes and lunch boxes.
 
-**8. Returning customers are most of the business.** They brought in 81.7% of revenue in 2010 and 91.1% in 2011, while new customers per month fell from about 250 to 440 in the first half of 2010 to about 70 to 220 in 2011. Caution: the data starts in December 2009, so some early "new" customers were probably existing ones.
+**8. Returning customers are most of the business.** They brought in 81.7% of revenue in 2010 and 91.1% in 2011. Caution: the data starts in December 2009, so some early "new" customers were probably existing ones. The 2011 figure is the reliable one.
 
 **9. New customers come back, but slowly.** Of the customers who joined in 2010, 73.8% bought again in a later month. But only about 1 in 5 buys again the very next month (20.5%), and a year on about 1 in 6 is buying in any given month (16.7%). Customers return months apart.
 
 **10. Revenue is concentrated.** The top 10% of customers (586 people) bring in 63.8% of revenue. The bottom half together bring in 6.5%.
 
-**What this adds up to:** the business lives on repeat customers and is not growing. Existing customers keep coming back, but months apart, and fewer new ones are arriving. The clearest opportunities are bringing customers back sooner and winning more new ones.
+**What this adds up to:** the business lives on repeat customers and is not growing. Existing customers keep coming back, but months apart. The clearest opportunities are bringing customers back sooner and winning more new ones.
 
 ## SQL and pandas, side by side
 
