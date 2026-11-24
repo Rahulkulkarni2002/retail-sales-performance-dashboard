@@ -27,11 +27,11 @@ Two companion projects use the same data:
 - [customer-segmentation-retention-analysis](https://github.com/Rahulkulkarni2002/customer-segmentation-retention-analysis): customer segments built from this data.
 
 ## Method
-Each number was built in SQL against the cleaned data, checked a second way where possible (for example, month-over-month growth is calculated in both SQL and pandas), and questioned before being trusted. Several first results led to more digging and a changed conclusion (see findings 4 and 5).
+Most numbers were built in SQL against the cleaned data, and order values in pandas. Results were checked a second way where possible (for example, month-over-month growth is calculated in both SQL and pandas), and questioned before being trusted. Several first results led to more digging and a changed conclusion (see findings 4 and 5).
 
 ## Findings
 
-Every finding below comes from SQL. Part 1 uses totals and rankings. Part 2 uses window functions, CTEs and joins.
+Most findings come from SQL. In Part 1, findings 1 to 3 use SQL totals and rankings, and findings 4 and 5 (order values) use pandas with one SQL check. Part 2 is all SQL: window functions, CTEs and joins.
 
 ### Part 1: sales, products and countries
 
@@ -51,7 +51,7 @@ Every finding below comes from SQL. Part 1 uses totals and rankings. Part 2 uses
 
 **7. The best sellers differ by country.** The cakestand leads in the UK, Ireland and Germany. In France and the Netherlands the leaders are children's items: night lights, snack boxes and lunch boxes.
 
-**8. Returning customers are most of the business.** They brought in 81.7% of revenue in 2010 and 91.1% in 2011, while new customers per month fell from 250 to 440 in early 2010 to 100 to 220 in 2011. Caution: the data starts in December 2009, so some early "new" customers were probably existing ones.
+**8. Returning customers are most of the business.** They brought in 81.7% of revenue in 2010 and 91.1% in 2011, while new customers per month fell from about 250 to 440 in the first half of 2010 to about 70 to 220 in 2011. Caution: the data starts in December 2009, so some early "new" customers were probably existing ones.
 
 **9. New customers come back, but slowly.** Of the customers who joined in 2010, 73.8% bought again in a later month. But only about 1 in 5 buys again the very next month (20.5%), and a year on about 1 in 6 is buying in any given month (16.7%). Customers return months apart.
 
