@@ -31,6 +31,8 @@ Each number was built in SQL against the cleaned data, checked a second way wher
 
 ## Findings
 
+Every finding below comes from SQL. Part 1 uses totals and rankings. Part 2 uses window functions, CTEs and joins.
+
 ### Part 1: sales, products and countries
 
 **1. Strong, repeating seasonality.** Revenue climbs sharply every September (+35.5% in 2010, +47.8% in 2011) and drops every January (-21.4% and -35.6%). The same pattern in two separate years rules out a one-off cause.
@@ -43,7 +45,7 @@ Each number was built in SQL against the cleaned data, checked a second way wher
 
 **5. Small samples mislead.** Several countries' average order values rest on one or two orders (Lebanon: £1,693.88 from a single order). Countries with fewer than 20 orders are left out of the comparison.
 
-### Part 2: customer questions, in SQL
+### Part 2: customers and growth
 
 **6. Revenue is flat year over year.** January to November 2011 brought in £7,767,253 against £7,732,972 in 2010, a rise of 0.4%. The seasonal peaks are large, but underneath them the business is not growing.
 
